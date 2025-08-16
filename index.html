@@ -1,227 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tame 'o Guesser</title>
-  <link rel="icon" href="images/my_favicon.png" type="image/png">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #000;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('images/background.png') center/cover no-repeat;
-      filter: blur(20px) brightness(0.5);
-      z-index: -1;
-    }
-    .menu, .game {
-      text-align: center;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,1);
-      background: rgba(123, 113, 113, 0.9);
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .game {
-      display: none;
-    }
-    canvas {
-      display: block;
-      margin: 20px 0;
-      transition: transform 0.2s;
-    }
-    .wiggle {
-      animation: wiggle 0.3s;
-    }
-    @keyframes wiggle {
-      0% { transform: rotate(0deg); }
-      25% { transform: rotate(2deg); }
-      50% { transform: rotate(-2deg); }
-      75% { transform: rotate(2deg); }
-      100% { transform: rotate(0deg); }
-    }
-    input {
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      flex: 1;
-    }
-    button {
-      padding: 8px 12px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: 10px 0;
-      width: 150px;
-    }
-    button:hover {
-      background: #1e4ed8;
-    }
-    .result {
-      margin-top: 15px;
-      padding: 10px;
-      border-radius: 5px;
-    }
-    .success { background: #bbf7d0; }
-    .fail { background: #fecaca; }
-    .title-wrapper {
-      position: relative;
-      display: inline-block;
-    }
-    .hint-text {
-      position: absolute;
-      right: -140px;
-      top: 10px;
-      transform: rotate(-20deg);
-      color: #eab308;
-      font-size: 14px;
-      animation: breathe 2s ease-in-out infinite;
-      white-space: nowrap;
-      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    }
-    @keyframes breathe {
-      0%, 100% { transform: rotate(-20deg) scale(1); }
-      50% { transform: rotate(-20deg) scale(1.1); }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tame 'o Guesser</title>
+    <link rel="icon" href="images/my_favicon.png" type="image/png">
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #000;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  body::before {
+    content:"";
+    position: fixed;
+    top:0; left:0; width:100%; height:100%;
+    background: url('images/background.png') center/cover no-repeat;
+    filter: blur(20px) brightness(0.5);
+    z-index: -1;
+  }
+  .menu, .game {
+    text-align:center;
+    border-radius: 15px;
+    box-shadow:0 4px 10px rgba(0,0,0,1);
+    background: rgba(123,113,113,0.9);
+    padding: 40px;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    position: relative;
+    z-index: 1;
+  }
+  .game { display:none; }
+  #timer { color:#fff; font-size:18px; margin-bottom:10px; text-align:center; }
+  canvas { display:block; margin:20px 0; transition: transform 0.2s; }
+  .wiggle { animation: wiggle 0.3s; }
+  @keyframes wiggle { 0%{transform:rotate(0deg);}25%{transform:rotate(2deg);}50%{transform:rotate(-2deg);}75%{transform:rotate(2deg);}100%{transform:rotate(0deg);} }
+  input { padding:8px; border:1px solid #ccc; border-radius:5px; flex:1; }
+  button { padding:8px 12px; background:#2563eb; color:white; border:none; border-radius:5px; cursor:pointer; margin:10px 0; width:150px; }
+  button:hover { background:#1e4ed8; }
+  .result { margin-top:15px; padding:10px; border-radius:5px; }
+  .success { background:#bbf7d0; }
+  .fail { background:#fecaca; }
+  .title-wrapper { position:relative; display:inline-block; }
+  .hint-text {
+    position:absolute; right:-120px; top:10px; transform:rotate(-20deg);
+    color:#eab308; font-size:14px; animation:breathe 2s ease-in-out infinite;
+    white-space:nowrap; text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;
+  }
+  @keyframes breathe {0%,100%{transform:rotate(-20deg) scale(1);}50%{transform:rotate(-40deg) scale(1.1);}}
+</style>
 </head>
 <body>
-  <div class="menu" id="menu">
-    <h1>Welcome to <b>Tame 'o Guesser!</b></h1>
-    <button id="play-btn">Play</button>
-    <button id="about-btn">About This</button>
+<canvas id="confetti-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;"></canvas>
+
+<div class="menu" id="menu">
+  <h1>Welcome to <b>Tame 'o Guesser!</b></h1>
+  <button id="play-btn">Play</button>
+  <button id="about-btn">About This</button>
+</div>
+
+<div class="game" id="game">
+  <div id="timer"></div>
+  <div class="title-wrapper">
+    <h1>Tame'o Guesser</h1>
+    <div id="hint" class="hint-text"></div>
   </div>
-
-  <div class="game" id="game">
-    <div class="title-wrapper">
-      <h1>Tame'o Guesser</h1>
-      <div id="hint" class="hint-text"></div>
-    </div>
-
-    <canvas id="mystery-canvas"></canvas>
-
-    <div id="input-area">
-      <input type="text" id="guess-input" placeholder="Enter your guess" />
-      <button id="guess-btn">Guess</button>
-    </div>
-
-    <div id="result"></div>
+  <canvas id="mystery-canvas"></canvas>
+  <div id="input-area">
+    <input type="text" id="guess-input" placeholder="Enter your guess" />
+    <button id="guess-btn">Guess</button>
   </div>
+  <div id="result"></div>
+  <button id="back-menu-btn" style="display:none; margin-top:10px;">Back to Menu</button>
+</div>
 
-  <script>
-    const IMAGE_DB = [
-      { name: "Acidog", src: "images/cardA.png" },
-      { name: "Card B", src: "images/cardB.png" },
-      { name: "Card C", src: "images/cardC.png" }
-    ];
+<script>
+let IMAGE_DB = [];
+let answer;
+let PIXEL_STAGES=[40,30,20,15,10,5,3,1];
+let stageIndex=0;
 
-    const HINTS = [
-      "DC is raiding!!",
-      "Nerf Infest Gazes!",
-      "You're probably alive!",
-      "Different cards daily...",
-      "Wheres my base?",
-      "https://discord.gg/CENRhYnxrM",
-      "HES HACKING!!!",
+const canvas=document.getElementById("mystery-canvas");
+const ctx=canvas.getContext("2d");
+const hintEl=document.getElementById("hint");
+const HINTS=["Reapers? Awww man!","Nerf Infest Gazes!","Man... wheres my base?","Octo is balanced!","I love it!","HEAL THE WATER FAIRY","me plz","team?"];
+hintEl.textContent=HINTS[Math.floor(Math.random()*HINTS.length)];
 
-    ];
+fetch('cards.json')
+  .then(r=>r.json())
+  .then(data=>{
+    IMAGE_DB=data;
+    pickRandomCard();
+    setupGame();
+  })
+  .catch(e=>console.error("Failed to load cards.json:",e));
 
-    const hintEl = document.getElementById("hint");
-    hintEl.textContent = HINTS[Math.floor(Math.random() * HINTS.length)];
+function pickRandomCard(){
+  if(IMAGE_DB.length===0) return;
+  let newCard;
+  do{
+    newCard = IMAGE_DB[Math.floor(Math.random()*IMAGE_DB.length)];
+  } while(newCard.name===answer?.name && IMAGE_DB.length>1);
+  answer=newCard;
+}
 
-    const day = new Date().toDateString();
-    const idx = day.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
-    const answer = IMAGE_DB[idx % IMAGE_DB.length];
+function setupGame(){
+  const img=new Image();
+  img.src=answer.src;
+  img.onload=()=>{
+    stageIndex=0;
+    canvas.width=img.width; canvas.height=img.height;
+    drawPixelated(PIXEL_STAGES[stageIndex]);
+    document.getElementById("input-area").style.display="flex";
+    document.getElementById("result").innerHTML="";
+    document.getElementById("back-menu-btn").style.display="none";
+  }
 
-    const canvas = document.getElementById("mystery-canvas");
-    const ctx = canvas.getContext("2d");
-    const img = new Image();
-    img.src = answer.src;
+  function drawPixelated(size){
+    if(!img.complete) return;
+    ctx.imageSmoothingEnabled=false;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const w=Math.max(1,Math.floor(canvas.width/size));
+    const h=Math.max(1,Math.floor(canvas.height/size));
+    const temp=document.createElement("canvas");
+    temp.width=w; temp.height=h;
+    const tctx=temp.getContext("2d"); tctx.imageSmoothingEnabled=false;
+    tctx.drawImage(img,0,0,w,h);
+    ctx.drawImage(temp,0,0,w,h,0,0,canvas.width,canvas.height);
+  }
 
-    const PIXEL_STAGES = [40, 30, 20, 15, 10, 5, 3, 1];
-    let stageIndex = 0;
+  // Confetti
+  const confettiCanvas=document.getElementById("confetti-canvas");
+  const confettiCtx=confettiCanvas.getContext("2d");
+  function resizeConfetti(){ confettiCanvas.width=window.innerWidth; confettiCanvas.height=window.innerHeight; }
+  window.addEventListener("resize",resizeConfetti); resizeConfetti();
+  let confettiParticles=[], confettiInterval;
+  function createConfetti(){ for(let i=0;i<150;i++){ confettiParticles.push({x:Math.random()*confettiCanvas.width,y:Math.random()*confettiCanvas.height-confettiCanvas.height,r:Math.random()*6+4,d:Math.random()*30+10,color:`hsl(${Math.random()*360},100%,50%)`,tilt:Math.random()*10-10,tiltAngleIncremental:Math.random()*0.07+0.05,tiltAngle:0});}}
+  function drawConfetti(){ confettiCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height); confettiParticles.forEach(p=>{ confettiCtx.beginPath(); confettiCtx.lineWidth=p.r/2; confettiCtx.strokeStyle=p.color; confettiCtx.moveTo(p.x+p.tilt+p.r/4,p.y); confettiCtx.lineTo(p.x+p.tilt,p.y+p.tilt+p.r/4); confettiCtx.stroke(); }); updateConfetti(); }
+  function updateConfetti(){ for(let i=0;i<confettiParticles.length;i++){ let p=confettiParticles[i]; p.tiltAngle+=p.tiltAngleIncremental; p.y+=(Math.cos(p.d)+3+p.r/2)/2; p.tilt=Math.sin(p.tiltAngle)*15; if(p.y>confettiCanvas.height){ confettiParticles[i]={...p,y:-10,x:Math.random()*confettiCanvas.width,tiltAngle:0};} } }
+  function startConfetti(){ createConfetti(); confettiInterval=setInterval(drawConfetti,20); }
+  function stopConfetti(){ clearInterval(confettiInterval); confettiParticles=[]; confettiCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height); }
 
-    img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      drawPixelated(PIXEL_STAGES[stageIndex]);
-    };
+  // Timer until midnight BRT + auto-load random card
+  const timerEl=document.getElementById("timer");
+  function startTimer(){
+    setInterval(()=>{
+      const now=new Date();
+      const utc=new Date(now.getTime()+now.getTimezoneOffset()*60000);
+      const btz=new Date(utc.getTime()-3*60*60000);
+      const midnight=new Date(btz); midnight.setHours(24,0,0,0);
+      let diff=(midnight-btz)/1000;
+      if(diff<0) diff=0;
+      const h=Math.floor(diff/3600); const m=Math.floor((diff%3600)/60); const s=Math.floor(diff%60);
+      timerEl.textContent=`Next card in: ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
 
-    function drawPixelated(size) {
-      if (!img.complete) return;
-      ctx.imageSmoothingEnabled = false;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if(diff===0){ pickRandomCard(); setupGame(); }
+    },1000);
+  }
+  startTimer();
 
-      const w = Math.max(1, Math.floor(canvas.width / size));
-      const h = Math.max(1, Math.floor(canvas.height / size));
+  // Buttons
+  document.getElementById("play-btn").addEventListener("click",()=>{
+    document.getElementById("menu").style.display="none";
+    document.getElementById("game").style.display="flex";
+  });
+  document.getElementById("about-btn").addEventListener("click",()=>{ window.location.href='about.html'; });
 
-      // Draw smaller image for pixelation effect
-      const tempCanvas = document.createElement("canvas");
-      tempCanvas.width = w;
-      tempCanvas.height = h;
-      const tempCtx = tempCanvas.getContext("2d");
-      tempCtx.imageSmoothingEnabled = false;
-      tempCtx.drawImage(img, 0, 0, w, h);
+  document.getElementById("guess-btn").addEventListener("click",()=>{
+    const input=document.getElementById("guess-input");
+    const guess=input.value.trim();
+    if(!guess) return; input.value="";
+    const isCorrect=guess.toLowerCase()===answer.name.toLowerCase();
 
-      // Draw back to main canvas
-      ctx.drawImage(tempCanvas, 0, 0, w, h, 0, 0, canvas.width, canvas.height);
+    if(isCorrect){
+      stageIndex=PIXEL_STAGES.length-1; drawPixelated(PIXEL_STAGES[stageIndex]);
+      document.getElementById("result").innerHTML=`<div class='result success'>🎉 Correct! It was ${answer.name}.</div>`;
+      document.getElementById("input-area").style.display="none";
+      startConfetti(); setTimeout(stopConfetti,2000);
+      document.getElementById("back-menu-btn").style.display="block";
+      return;
     }
+    if(stageIndex<PIXEL_STAGES.length-1) stageIndex++;
+    drawPixelated(PIXEL_STAGES[stageIndex]);
+    canvas.classList.remove("wiggle"); void canvas.offsetWidth; canvas.classList.add("wiggle");
+    if(stageIndex===PIXEL_STAGES.length-1){
+      document.getElementById("result").innerHTML=`<div class='result fail'>😅 Out of guesses! The answer was ${answer.name}.</div>`;
+      document.getElementById("input-area").style.display="none";
+      document.getElementById("back-menu-btn").style.display="block";
+    }
+  });
 
-    document.getElementById("play-btn").addEventListener("click", () => {
-      document.getElementById("menu").style.display = "none";
-      document.getElementById("game").style.display = "flex";
-    });
-
-    document.getElementById("about-btn").addEventListener("click", () => {
-      window.location.href = 'about.html';
-    });
-
-    document.getElementById("guess-btn").addEventListener("click", () => {
-      const input = document.getElementById("guess-input");
-      const guess = input.value.trim();
-      if (!guess) return;
-      input.value = "";
-
-      const isCorrect = guess.toLowerCase() === answer.name.toLowerCase();
-
-      if (isCorrect) {
-        stageIndex = PIXEL_STAGES.length - 1;
-        drawPixelated(PIXEL_STAGES[stageIndex]);
-        document.getElementById("result").innerHTML = `<div class='result success'>🎉 Correct! It was ${answer.name}.</div>`;
-        document.getElementById("input-area").style.display = "none";
-        return;
-      }
-
-      if (stageIndex < PIXEL_STAGES.length - 1) stageIndex++;
-      drawPixelated(PIXEL_STAGES[stageIndex]);
-
-      canvas.classList.remove("wiggle");
-      void canvas.offsetWidth;
-      canvas.classList.add("wiggle");
-
-      if (stageIndex === PIXEL_STAGES.length - 1) {
-        document.getElementById("result").innerHTML = `<div class='result fail'>😅 Out of guesses! The answer was ${answer.name}.</div>`;
-        document.getElementById("input-area").style.display = "none";
-      }
-    });
-  </script>
+  document.getElementById("back-menu-btn").addEventListener("click",()=>{
+    document.getElementById("game").style.display="none";
+    document.getElementById("menu").style.display="flex";
+    stageIndex=0;
+    document.getElementById("back-menu-btn").style.display="none";
+  });
+}
+</script>
 </body>
 </html>
-
