@@ -54,3 +54,15 @@ fetch("config.json")
     const challenge = data.challenges[0]; // pick the first one
     startGame(challenge.image, challenge.answer);
   });
+
+function drawPixelated() {
+  const w = img.width;
+  const h = img.height;
+
+  ctx.drawImage(img, 0, 0, w / pixelSize, h / pixelSize);
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(canvas, 0, 0, w / pixelSize, h / pixelSize, 0, 0, w, h);
+
+  // Add shimmer effect
+  canvas.classList.add("pixel-shimmer");
+}
