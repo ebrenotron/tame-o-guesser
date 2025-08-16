@@ -3,117 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>Pixel Guess Game</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #222;
-      color: white;
-    }
-    canvas {
-      border: 2px solid white;
-      margin: 20px 0;
-      max-width: 90vw;
-    }
-    input, button {
-      padding: 8px 12px;
-      margin: 5px;
-      font-size: 16px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Pixel Guess Game</h1>
-  
-  <p>Step 1: Upload an image</p>
-  <input type="file" id="upload" accept="image/*"><br>
 
-  <p>Step 2: Set the correct answer</p>
-  <input type="text" id="answerInput" placeholder="Correct answer"><br>
-  <button id="startBtn">Start Game</button>
-
-  <h2 id="status"></h2>
   <canvas id="canvas"></canvas>
+  <p id="status"></p>
 
-  <div id="guessArea" style="display:none;">
+  <div id="guessArea">
     <input type="text" id="guess" placeholder="Your guess">
     <button id="checkBtn">Check Guess</button>
   </div>
 
-  <script>
-    const upload = document.getElementById("upload");
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    const startBtn = document.getElementById("startBtn");
-    const guessArea = document.getElementById("guessArea");
-    const guessInput = document.getElementById("guess");
-    const checkBtn = document.getElementById("checkBtn");
-    const statusEl = document.getElementById("status");
-
-    let img = new Image();
-    let correctAnswer = "";
-    let pixelSize = 40; // start very pixelated
-
-    let imgLoaded = false;
-
-    upload.addEventListener("change", e => {
-      const file = e.target.files[0];
-      img = new Image();
-      img.onload = () => {
-        imgLoaded = true;
-        statusEl.textContent = "Image uploaded. Enter the correct answer.";
-      };
-      img.src = URL.createObjectURL(file);
-    });
-
-    startBtn.addEventListener("click", () => {
-      correctAnswer = document.getElementById("answerInput").value.trim().toLowerCase();
-      if (!imgLoaded) {
-        alert("Please upload an image first!");
-        return;
-      }
-      if (!correctAnswer) {
-        alert("Please set a correct answer!");
-        return;
-      }
-
-      pixelSize = 40; // reset difficulty
-      drawPixelated();
-      guessArea.style.display = "block";
-      statusEl.textContent = "Game started! Guess the image.";
-    });
-
-    function drawPixelated() {
-      const w = img.width;
-      const h = img.height;
-      canvas.width = w;
-      canvas.height = h;
-
-      // Draw scaled down
-      ctx.drawImage(img, 0, 0, w / pixelSize, h / pixelSize);
-
-      // Scale it back up
-      ctx.imageSmoothingEnabled = false;
-      ctx.drawImage(canvas, 0, 0, w / pixelSize, h / pixelSize, 0, 0, w, h);
-    }
-
-    checkBtn.addEventListener("click", () => {
-      const guess = guessInput.value.trim().toLowerCase();
-      if (!guess) return;
-
-      if (guess === correctAnswer) {
-        ctx.drawImage(img, 0, 0); // show full image
-        statusEl.textContent = "✅ Correct! You guessed it!";
-        guessArea.style.display = "none";
-      } else {
-        statusEl.textContent = "❌ Wrong guess! Try again.";
-        pixelSize = Math.max(2, pixelSize - 6); // clearer each time
-        drawPixelated();
-      }
-
-      guessInput.value = "";
-      guessInput.focus();
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
