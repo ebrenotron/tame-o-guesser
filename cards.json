@@ -1,0 +1,442 @@
+[
+  {
+    "name": "Toad",
+    "src": "images/card (1).png"
+  },
+  {
+    "name": "Yeti",
+    "src": "images/card (2).png"
+  },
+  {
+    "name": "Yellow Scorpion",
+    "src": "images/card (3).png"
+  },
+  {
+    "name": "Stone Golem",
+    "src": "images/card (4).png"
+  },
+  {
+    "name": "Seahorse",
+    "src": "images/card (5).png"
+  },
+  {
+    "name": "Rabbyss",
+    "src": "images/card (6).png"
+  },
+  {
+    "name": "Raven",
+    "src": "images/card (7).png"
+  },
+  {
+    "name": "Rock Fairy",
+    "src": "images/card (8).png"
+  },
+  {
+    "name": "Shark",
+    "src": "images/card (9).png"
+  },
+  {
+    "name": "Salamander",
+    "src": "images/card (10).png"
+  },
+  {
+    "name": "Snow Fox",
+    "src": "images/card (11).png"
+  },
+  {
+    "name": "Spectrum",
+    "src": "images/card (12).png"
+  },
+  {
+    "name": "Snow Rabbit",
+    "src": "images/card (13).png"
+  },
+  {
+    "name": "Sheep",
+    "src": "images/card (14).png"
+  },
+  {
+    "name": "Rat",
+    "src": "images/card (15).png"
+  },
+  {
+    "name": "Ostrich",
+    "src": "images/card (16).png"
+  },
+  {
+    "name": "Penguin",
+    "src": "images/card (17).png"
+  },
+  {
+    "name": "Giant Bee",
+    "src": "images/card (18).png"
+  },
+  {
+    "name": "Giant Mantis",
+    "src": "images/card (19).png"
+  },
+  {
+    "name": "Poison Fairy",
+    "src": "images/card (21).png"
+  },
+  {
+    "name": "Vulture",
+    "src": "images/card (22).png"
+  },
+  {
+    "name": "Dark Wisp",
+    "src": "images/card (23).png"
+  },
+  {
+    "name": "Deer",
+    "src": "images/card (24).png"
+  },
+  {
+    "name": "Ice Mask",
+    "src": "images/card (25).png"
+  },
+  {
+    "name": "Goldfish",
+    "src": "images/card (26).png"
+  },
+  {
+    "name": "Grim Reaper",
+    "src": "images/card (27).png"
+  },
+  {
+    "name": "Dog",
+    "src": "images/card (28).png"
+  },
+  {
+    "name": "Draconic Gaze",
+    "src": "images/card (29).png"
+  },
+  {
+    "name": "Dragon Fairy",
+    "src": "images/card (30).png"
+  },
+  {
+    "name": "Lynx",
+    "src": "images/card (31).png"
+  },
+  {
+    "name": "Mammoth",
+    "src": "images/card (32).png"
+  },
+  {
+    "name": "Mauve",
+    "src": "images/card (33).png"
+  },
+  {
+    "name": "Krampus",
+    "src": "images/card (34).png"
+  },
+  {
+    "name": "Kangaroo",
+    "src": "images/card (35).png"
+  },
+  {
+    "name": "Infesting Gaze",
+    "src": "images/card (36).png"
+  },
+  {
+    "name": "Ice Golem",
+    "src": "images/card (37).png"
+  },
+  {
+    "name": "Ice Fairy",
+    "src": "images/card (38).png"
+  },
+  {
+    "name": "Enchanting Gaze",
+    "src": "images/card (39).png"
+  },
+  {
+    "name": "Fennec Fox",
+    "src": "images/card (40).png"
+  },
+  {
+    "name": "Snow Wolf",
+    "src": "images/card (41).png"
+  },
+  {
+    "name": "Spectral Gaze",
+    "src": "images/card (42).png"
+  },
+  {
+    "name": "Spectrum Fairy",
+    "src": "images/card (43).png"
+  },
+  {
+    "name": "Easter Bunny",
+    "src": "images/card (44).png"
+  },
+  {
+    "name": "Fire Fairy",
+    "src": "images/card (45).png"
+  },
+  {
+    "name": "Lizardman",
+    "src": "images/card (46).png"
+  },
+  {
+    "name": "Menhir",
+    "src": "images/card (47).png"
+  },
+  {
+    "name": "Hedgehog",
+    "src": "images/card (48).png"
+  },
+  {
+    "name": "Hellhound",
+    "src": "images/card (49).png"
+  },
+  {
+    "name": "Horse",
+    "src": "images/card (50).png"
+  },
+  {
+    "name": "Ibex",
+    "src": "images/card (51).png"
+  },
+  {
+    "name": "Ice Dragon",
+    "src": "images/card (52).png"
+  },
+  {
+    "name": "Iceberg",
+    "src": "images/card (53).png"
+  },
+  {
+    "name": "Inferno Gaze",
+    "src": "images/card (54).png"
+  },
+  {
+    "name": "Insect Fairy",
+    "src": "images/card (55).png"
+  },
+  {
+    "name": "Plant Statue",
+    "src": "images/card (56).png"
+  },
+  {
+    "name": "Unicorn",
+    "src": "images/card (57).png"
+  },
+  {
+    "name": "Rock Mask",
+    "src": "images/card (58).png"
+  },
+  {
+    "name": "Stingray",
+    "src": "images/card (59).png"
+  },
+  {
+    "name": "Skunk",
+    "src": "images/card (60).png"
+  },
+  {
+    "name": "Rabblow",
+    "src": "images/card (61).png"
+  },
+  {
+    "name": "Living Mushroom",
+    "src": "images/card (62).png"
+  },
+  {
+    "name": "Normal Fairy",
+    "src": "images/card (63).png"
+  },
+  {
+    "name": "Squid",
+    "src": "images/card (64).png"
+  },
+  {
+    "name": "Sea Crab",
+    "src": "images/card (65).png"
+  },
+  {
+    "name": "Siren",
+    "src": "images/card (66).png"
+  },
+  {
+    "name": "Savant Shadow",
+    "src": "images/card (67).png"
+  },
+  {
+    "name": "Plant Fairy",
+    "src": "images/card (68).png"
+  },
+  {
+    "name": "Plant Mask",
+    "src": "images/card (69).png"
+  },
+  {
+    "name": "Warg",
+    "src": "images/card (70).png"
+  },
+  {
+    "name": "Wolf",
+    "src": "images/card (71).png"
+  },
+  {
+    "name": "Reindeer",
+    "src": "images/card (72).png"
+  },
+  {
+    "name": "Rexdog",
+    "src": "images/card (73).png"
+  },
+  {
+    "name": "Normal Mask",
+    "src": "images/card (74).png"
+  },
+  {
+    "name": "Scrappy Shadow",
+    "src": "images/card (75).png"
+  },
+  {
+    "name": "Acidog",
+    "src": "images/card (76).png"
+  },
+  {
+    "name": "Flying Squirrel",
+    "src": "images/card (77).png"
+  },
+  {
+    "name": "Adoring Shadow",
+    "src": "images/card (78).png"
+  },
+  {
+    "name": "Armadillo",
+    "src": "images/card (79).png"
+  },
+  {
+    "name": "Axolotl",
+    "src": "images/card (80).png"
+  },
+  {
+    "name": "Barn Owl",
+    "src": "images/card (81).png"
+  },
+  {
+    "name": "Bear",
+    "src": "images/card (82).png"
+  },
+  {
+    "name": "Bat",
+    "src": "images/card (83).png"
+  },
+  {
+    "name": "Black Cat",
+    "src": "images/card (84).png"
+  },
+  {
+    "name": "Black Spider",
+    "src": "images/card (85).png"
+  },
+  {
+    "name": "Boar",
+    "src": "images/card (86).png"
+  },
+  {
+    "name": "Bugdog",
+    "src": "images/card (87).png"
+  },
+  {
+    "name": "Bull",
+    "src": "images/card (88).png"
+  },
+  {
+    "name": "Cratodon",
+    "src": "images/card (89).png"
+  },
+  {
+    "name": "Cow",
+    "src": "images/card (90).png"
+  },
+  {
+    "name": "Caracal",
+    "src": "images/card (91).png"
+  },
+  {
+    "name": "Camel",
+    "src": "images/card (92).png"
+  },
+  {
+    "name": "Coldog",
+    "src": "images/card (93).png"
+  },
+  {
+    "name": "Combat Fairy",
+    "src": "images/card (94).png"
+  },
+  {
+    "name": "Digger Shadow",
+    "src": "images/card (95).png"
+  },
+  {
+    "name": "Giant Moth",
+    "src": "images/card (96).png"
+  },
+  {
+    "name": "Glacial Gaze",
+    "src": "images/card (97).png"
+  },
+  {
+    "name": "Gold Golem",
+    "src": "images/card (98).png"
+  },
+  {
+    "name": "Dragon",
+    "src": "images/card (99).png"
+  },
+  {
+    "name": "Guardian Shadow",
+    "src": "images/card (100).png"
+  },
+  {
+    "name": "Fire statue",
+    "src": "images/card (101).png"
+  },
+  {
+    "name": "Polar Bear",
+    "src": "images/card (102).png"
+  },
+  {
+    "name": "Polecat",
+    "src": "images/card (103).png"
+  },
+  {
+    "name": "Octopus",
+    "src": "images/card (104).png"
+  },
+  {
+    "name": "Oryx",
+    "src": "images/card (105).png"
+  },
+  {
+    "name": "Rabburn",
+    "src": "images/card (106).png"
+  },
+  {
+    "name": "Water Fairy",
+    "src": "images/card (107).png"
+  },
+  {
+    "name": "Water Mask",
+    "src": "images/card (108).png"
+  },
+  {
+    "name": "Water Statue",
+    "src": "images/card (109).png"
+  },
+  {
+    "name": "White Spider",
+    "src": "images/card (110).png"
+  },
+  {
+    "name": "Turkey",
+    "src": "images/card (111).png"
+  }
+]
