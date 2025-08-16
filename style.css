@@ -1,4 +1,4 @@
-/* Reset some basic styles */
+/* Reset */
 body, html {
   margin: 0;
   padding: 0;
@@ -15,12 +15,33 @@ body, html {
   text-align: center;
 }
 
-h1 {
-  font-size: 2.8rem;
+/* Title with zooming animation */
+.game-title {
+  font-size: 3rem;
   margin-bottom: 20px;
   text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+  display: inline-block;
+  animation: titleZoom 1.8s ease-in-out infinite;
+  position: relative;
 }
 
+/* Yellow side tagline like Minecraft */
+.tagline {
+  display: block;
+  font-size: 1rem;
+  color: #ffeb3b;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+  margin-top: 5px;
+}
+
+/* Zoom animation */
+@keyframes titleZoom {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* Canvas styling */
 canvas {
   border: 4px solid #fff;
   border-radius: 12px;
@@ -29,12 +50,24 @@ canvas {
   max-width: 90vw;
 }
 
+/* Pixel shimmer effect: subtle */
+@keyframes shimmer {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+  100% { filter: brightness(1); }
+}
+canvas.pixel-shimmer {
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* Status text */
 #status {
   font-size: 1.5rem;
   margin-bottom: 15px;
   text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
 }
 
+/* Input and button styling */
 #guessArea input {
   padding: 12px 15px;
   font-size: 1rem;
@@ -61,6 +94,7 @@ canvas {
   transform: scale(1.05);
 }
 
+/* Footer */
 footer {
   margin-top: 40px;
   font-size: 0.9rem;
