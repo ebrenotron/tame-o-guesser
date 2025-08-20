@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tame 'o Guesser - Title</title>
+<link rel="icon" href="images/my_favicon.png" type="image/png">
+
+<style>
+  body {
+    margin:0;
+    background:#000;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family: Arial, sans-serif;
+  }
+  body::before {
+    content:"";
+    position:fixed;
+    top:0; left:0; width:100%; height:100%;
+    background:center/cover no-repeat;
+    filter: blur(20px) brightness(0.5);
+    z-index:-1;
+  }
+
+  /* ✨ Shiny main title */
+  .main-title {
+    font-size:4rem;
+    font-weight:bold;
+    text-align:center;
+    margin-bottom:40px;
+    background: linear-gradient(90deg, #ff6ec4, #7873f5, #42d392, #ff6ec4);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientFlow 6s ease infinite;
+    text-shadow: 0 0 10px rgba(255,255,255,0.5),
+                 0 0 20px rgba(255,255,255,0.3),
+                 0 0 30px rgba(255,255,255,0.2);
+  }
+  @keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  button {
+    padding:12px 24px;
+    font-size:1.2rem;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,0.5);
+  }
+  button:hover { background:#1e4ed8; }
+</style>
+</head>
+<body>
+
+<h1 class="main-title">Tame 'o Guesser</h1>
+<button onclick="location.href='index.html'">Enter Game</button>
+
+<script>
+  /* Random backgrounds */
+  const backgrounds = [
+    "images/background.png",
+    "images/background2.png",
+    "images/background3.png",
+    "images/background4.png",
+    "images/background5.png"
+  ];
+  const chosenBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+  document.styleSheets[0].insertRule(
+    `body::before { background-image: url('${chosenBg}') !important; }`,
+    0
+  );
+</script>
+
+</body>
+</html>
