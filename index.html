@@ -21,11 +21,12 @@
     content:"";
     position: fixed;
     top:0; left:0; width:100%; height:100%;
-    background: url('images/background.png') center/cover no-repeat;
+    background: center/cover no-repeat;
     filter: blur(20px) brightness(0.5);
     z-index: -1;
   }
-  .menu, .game {
+
+  .game {
     text-align:center;
     border-radius: 15px;
     box-shadow:0 4px 10px rgba(0,0,0,1);
@@ -37,10 +38,11 @@
     position: relative;
     z-index: 1;
   }
-  .game { display:none; }
+
   canvas { display:block; margin:20px 0; transition: transform 0.2s; }
   .wiggle { animation: wiggle 0.3s; }
   @keyframes wiggle { 0%{transform:rotate(0deg);}25%{transform:rotate(2deg);}50%{transform:rotate(-2deg);}75%{transform:rotate(2deg);}100%{transform:rotate(0deg);} }
+
   input { padding:8px; border:1px solid #ccc; border-radius:5px; flex:1; }
   button { padding:8px 12px; background:#2563eb; color:white; border:none; border-radius:5px; cursor:pointer; margin:10px 0; width:150px; }
   button:hover { background:#1e4ed8; }
@@ -48,25 +50,31 @@
   .success { background:#bbf7d0; }
   .fail { background:#fecaca; }
   .title-wrapper { position:relative; display:inline-block; }
+
+  /* Shiny title */
+  h1 {
+    font-size: 3em;
+    background: linear-gradient(90deg, #fff, #ffd700, #fff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+  }
+  @keyframes shine { to { background-position: 200% center; } }
+
   .hint-text {
     position:absolute; right:-120px; top:10px; transform:rotate(-20deg);
     color:#eab308; font-size:14px; animation:breathe 2s ease-in-out infinite;
     white-space:nowrap; text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;
   }
-  @keyframes breathe {0%,100%{transform:rotate(-20deg) scale(1);}50%{transform:rotate(-40deg) scale(1.1);}}
-  #back-menu-btn { display:none; margin-top:10px; }
+  @keyframes breathe {0%,100%{transform:rotate(-20deg) scale(1);}50%{transform:rotate(-40deg) scale(1.1);} }
+  #back-menu-btn { margin-top:10px; }
   canvas#confetti-canvas { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; }
 </style>
 </head>
 <body>
 
 <canvas id="confetti-canvas"></canvas>
-
-<div class="menu" id="menu">
-  <h1>Welcome to <b>Tame 'o Guesser!</b></h1>
-  <button id="play-btn">Play</button>
-  <button id="about-btn">About This</button>
-</div>
 
 <div class="game" id="game">
   <div class="title-wrapper">
@@ -79,10 +87,25 @@
     <button id="guess-btn">Guess</button>
   </div>
   <div id="result"></div>
-  <button id="back-menu-btn">Back to Menu</button>
+  <button id="back-menu-btn" onclick="location.href='title.html'">Back to Menu</button>
 </div>
 
 <script>
+/* Random background support */
+const backgrounds = [
+  "images/background.png",
+  "images/background2.png",
+  "images/background3.png",
+  "images/background4.png",
+  "images/background5.png"
+];
+const chosenBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+document.styleSheets[0].insertRule(
+  `body::before { background-image: url('${chosenBg}') !important; }`,
+  0
+);
+
+/* Game logic */
 let IMAGE_DB = [];
 let answer;
 let PIXEL_STAGES=[40,30,20,15,10,5,3,1];
@@ -96,33 +119,26 @@ hintEl.textContent=HINTS[Math.floor(Math.random()*HINTS.length)];
 
 fetch('cards.json')
   .then(r=>r.json())
-  .then(data=>{
-    IMAGE_DB=data;
-    pickRandomCard();
-    setupGame();
-  })
+  .then(data=>{ IMAGE_DB=data; pickRandomCard(); setupGame(); })
   .catch(e=>console.error("Failed to load cards.json:",e));
 
 function pickRandomCard(){
   if(IMAGE_DB.length===0) return;
   let newCard;
-  do{
-    newCard = IMAGE_DB[Math.floor(Math.random()*IMAGE_DB.length)];
-  } while(newCard.name===answer?.name && IMAGE_DB.length>1);
+  do{ newCard = IMAGE_DB[Math.floor(Math.random()*IMAGE_DB.length)]; } 
+  while(newCard.name===answer?.name && IMAGE_DB.length>1);
   answer=newCard;
 }
 
 function setupGame(){
   const img=new Image();
   img.src=answer.src;
-
   img.onload=()=>{
     stageIndex=0;
     canvas.width=img.width; canvas.height=img.height;
     drawPixelated(PIXEL_STAGES[stageIndex]);
     document.getElementById("input-area").style.display="flex";
     document.getElementById("result").innerHTML="";
-    document.getElementById("back-menu-btn").style.display="none";
   }
 
   function drawPixelated(size){
@@ -138,7 +154,7 @@ function setupGame(){
     ctx.drawImage(temp,0,0,w,h,0,0,canvas.width,canvas.height);
   }
 
-  // Confetti
+  /* Confetti */
   const confettiCanvas=document.getElementById("confetti-canvas");
   const confettiCtx=confettiCanvas.getContext("2d");
   function resizeConfetti(){ confettiCanvas.width=window.innerWidth; confettiCanvas.height=window.innerHeight; }
@@ -150,46 +166,27 @@ function setupGame(){
   function startConfetti(){ createConfetti(); confettiInterval=setInterval(drawConfetti,20); }
   function stopConfetti(){ clearInterval(confettiInterval); confettiParticles=[]; confettiCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height); }
 
-  // Buttons
-  document.getElementById("play-btn").addEventListener("click",()=>{
-    document.getElementById("menu").style.display="none";
-    document.getElementById("game").style.display="flex";
-  });
-  document.getElementById("about-btn").addEventListener("click",()=>{ window.location.href='about.html'; });
-
+  /* Guess button */
   document.getElementById("guess-btn").onclick=()=>{
     const input=document.getElementById("guess-input");
     const guess=input.value.trim();
     if(!guess) return; input.value="";
     const isCorrect=guess.toLowerCase()===answer.name.toLowerCase();
-
     if(isCorrect){
       stageIndex=PIXEL_STAGES.length-1; drawPixelated(PIXEL_STAGES[stageIndex]);
       document.getElementById("result").innerHTML=`<div class='result success'>🎉 Correct! It was ${answer.name}.</div>`;
       document.getElementById("input-area").style.display="none";
       startConfetti(); setTimeout(stopConfetti,2000);
-      setTimeout(()=>{
-        pickRandomCard();
-        setupGame();
-      }, 2200); // wait for confetti
+      setTimeout(()=>{ pickRandomCard(); setupGame(); }, 2200);
       return;
     }
-
     if(stageIndex<PIXEL_STAGES.length-1) stageIndex++;
     drawPixelated(PIXEL_STAGES[stageIndex]);
     canvas.classList.remove("wiggle"); void canvas.offsetWidth; canvas.classList.add("wiggle");
     if(stageIndex===PIXEL_STAGES.length-1){
       document.getElementById("result").innerHTML=`<div class='result fail'>😅 Out of guesses! The answer was ${answer.name}.</div>`;
       document.getElementById("input-area").style.display="none";
-      document.getElementById("back-menu-btn").style.display="block";
     }
-  };
-
-  document.getElementById("back-menu-btn").onclick=()=>{
-    document.getElementById("game").style.display="none";
-    document.getElementById("menu").style.display="flex";
-    stageIndex=0;
-    document.getElementById("back-menu-btn").style.display="none";
   };
 }
 </script>
